@@ -1,6 +1,4 @@
-import sys
-sys.path.append("..")
-from fastapi import Depends, HTTPException, status, APIRouter
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
@@ -29,8 +27,7 @@ models.Base.metadata.create_all(bind=engine)
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="token")
 
-# app = FastAPI()
-router = APIRouter(prefix="/api/auth", tags=["auth"], responses={401: {"user": "Not Authorised"}})
+app = FastAPI()
 
 def get_db():
     try:
@@ -75,11 +72,11 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
     except JWTError:
         raise get_user_exception()
     
-@router.get("/users")
+@app.get("/users")
 async def get_all_users(db: Session= Depends(get_db)):
     return db.query(models.Users).all()
 
-@router.post("/create/user")
+@app.post("/create/user")
 async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
     create_user_model = models.Users()
     create_user_model.email = create_user.email
@@ -93,10 +90,9 @@ async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)
 
     db.add(create_user_model)
     db.commit()
-    full_name = f"{create_user.first_name.title()} {create_user.last_name.title()}"
-    return successfull_response(201), {"Username": create_user.username, "Full Name": full_name}
+    return successfull_response(201)
 
-@router.post("/token")
+@app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:

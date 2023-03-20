@@ -3,12 +3,12 @@ sys.path.append("..")
 
 from fastapi import Depends, APIRouter
 import models
-from todo_db import engine, SessionLocal
+from rest_api_db import engine, SessionLocal
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from .auth import get_current_user, get_user_exception, verify_password, get_password_hash
 
-router = APIRouter(prefix="/api/users", tags=["users"], responses={404: {"description": "User not found."}})
+router = APIRouter()
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -73,8 +73,4 @@ async def delete_user(user: dict = Depends(get_current_user), db: Session = Depe
     db.query(models.Users).filter(models.Users.id == user.get("id")).delete()
     db.commit()
 
-    # 
-
     return {"username": user_model.username, "Message": "User deleted successfully!"}
-
-

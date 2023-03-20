@@ -1,13 +1,16 @@
 import sys
 sys.path.append("..")
 
-from fastapi import HTTPException, Depends, APIRouter
+from fastapi import HTTPException, Depends, APIRouter, Request
 import models
 from typing import Optional
 from todo_db import engine, SessionLocal
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from .auth import get_user_exception, get_current_user
+
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 # from starlette.responses import JSONResponse
 # import uuid
@@ -20,6 +23,9 @@ from .auth import get_user_exception, get_current_user
 router = APIRouter(prefix="/api/todo", tags=["todos"], responses={401: {"user": "Not Authorised"}})
 
 models.Base.metadata.create_all(bind=engine)
+
+templetes = Jinja2Templates(directory = "templates")
+
 
 
 
@@ -36,6 +42,9 @@ class Todo(BaseModel):
     priority: int = Field(gt=0, lt=6, description="The priority must be between 1-5")
     complete: bool
     
+@router.get("/test")
+async def test(request: Request):
+    return templetes.TemplateResponse("home.html", {"request": request})
 
 @router.get("/")
 async def read_all(db: Session= Depends(get_db)):

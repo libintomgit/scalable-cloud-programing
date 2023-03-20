@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+import sys
+sys.path.append("..")
+from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
@@ -19,6 +21,7 @@ class CreateUser(BaseModel):
     email: Optional[str]
     first_name: str
     last_name: str
+    phone_number: Optional[str]
     password: str
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -27,7 +30,8 @@ models.Base.metadata.create_all(bind=engine)
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="token")
 
-app = FastAPI()
+# app = FastAPI()
+router = APIRouter(prefix="/api/auth", tags=["auth"], responses={401: {"user": "Not Authorised"}})
 
 def get_db():
     try:
@@ -72,17 +76,18 @@ async def get_current_user(token: str = Depends(oauth2_bearer)):
     except JWTError:
         raise get_user_exception()
     
-@app.get("/users")
+@router.get("/users")
 async def get_all_users(db: Session= Depends(get_db)):
     return db.query(models.Users).all()
 
-@app.post("/create/user")
+@router.post("/create/user")
 async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)):
     create_user_model = models.Users()
     create_user_model.email = create_user.email
     create_user_model.username = create_user.username
     create_user_model.first_name= create_user.first_name
     create_user_model.last_name= create_user.last_name
+    create_user_model.phone_number = create_user.phone_number
 
     hash_passord = get_password_hash(create_user.password)
     create_user_model.hashed_password= hash_passord
@@ -93,7 +98,7 @@ async def create_new_user(create_user: CreateUser, db: Session = Depends(get_db)
     full_name = f"{create_user.first_name.title()} {create_user.last_name.title()}"
     return successfull_response(201), {"Username": create_user.username, "Full Name": full_name}
 
-@app.post("/token")
+@router.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
