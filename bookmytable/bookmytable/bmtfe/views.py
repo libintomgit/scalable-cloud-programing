@@ -37,10 +37,17 @@ def supportTicket(request):
 def foodReview(request):
     return render(request, 'bmtfe/foodreview.html')
 
-def ownerPage(request, rester_id):
+def ownerPage(request, restr_id):
     # headers = {'Accept': 'application/json'}
     # response = requests.get(f"http://localhost:8000/api/restr/{restr_id}", headers=headers)
-    pass
+    headers = {'Accept': 'application/json'}
+    url = f"http://localhost:8000/api/booking/pending/{restr_id}"
+    response = requests.get(url, headers=headers)
+    response = response.json()
+
+    paramas = {'bookings': response}
+
+    return render(request, 'bmtfe/owner.html', paramas)
 
 def handleSignUp(request):
 
@@ -121,3 +128,16 @@ def restrBooking(request, restr_id):
 
         return render(request, 'bmtfe/booking.html', paramas)
 
+
+def bookingComplete(request, booking_id):
+    complete =   { "complete": True }
+
+    headers = {'Accept': 'application/json'}
+    url = f"http://localhost:8000/api/booking/{booking_id}"
+    response = requests.put(url, json=complete)
+    response = response.json()
+    response = response[1]
+    
+    messages.success(request, f"{response['response']} for the booking id {booking_id} ")
+
+    return redirect('index')
