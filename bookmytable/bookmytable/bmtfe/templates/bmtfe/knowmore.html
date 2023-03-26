@@ -1,0 +1,63 @@
+{% extends 'bmtfe/base.html' %}
+{% block title%} {{restr.title}} {% endblock title%}
+
+{% block body %}
+{% include 'bmtfe/navbar.html' %}
+{% load static %}
+<div class="container-fluid" style="background-color:" >
+    <div class="container my-3 text-justify text-center p-3 mb-2 bg-info text-white">
+        <h1 style="font-size: 50px">{{restr.title| upper}}</h1>
+    </div>
+    <div class="container">
+      <div class="row" id="gallery">
+        <div class="col-12 col-sm-6 col-lg-3">
+          <img class="w-100" src="{% static 'bmtfe/images/testimg.png' %}" data-target="#exampleModal" data-slide-to="0">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <img class="w-100" src="{% static 'bmtfe/images/testimg.png' %}" data-target="#exampleModal" data-slide-to="1">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <img class="w-100" src="{% static 'bmtfe/images/testimg.png' %}" data-target="#exampleModal" data-slide-to="2">
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <img class="w-100" src="{% static 'bmtfe/images/testimg.png' %}" data-target="#exampleModal" data-slide-to="3">
+        </div>
+      </div>
+    </div>
+        <!-- modal corousal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container my-3">
+    <div class="row">
+      <div class="col-12">
+        <h3>About our restaurant:</h3>
+        <p>{{restr.description| title}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h3>Our Menu:</h3>
+        <p>list <br> list <br> list</p>
+      </div>
+    </div>
+  </div>
+  <div class="align-self-end" >
+    <a href="#" class="btn btn-primary " style="margin-top: 30px; margin-left: 45%;">Book Now</a>
+  </div>  
+</div>    
+
+{% endblock body %}

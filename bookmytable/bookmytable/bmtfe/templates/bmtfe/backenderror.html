@@ -1,0 +1,9 @@
+{% extends 'bmtfe/base.html' %}
+{% block title%} Excemption {% endblock title%}
+
+{% block body %}
+{% comment %} {% for elm in response%} {% endcomment %}
+<h1>{{response.message}}</h1>
+<p>{{response.error}}</p>
+{% comment %} {% endfor %} {% endcomment %}
+{%endblock body%}

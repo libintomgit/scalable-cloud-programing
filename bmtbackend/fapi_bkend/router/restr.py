@@ -62,10 +62,12 @@ async def read_all_by_user(user: dict = Depends(get_current_user), db: Session =
 
 # RE-WRITE THE FUNCTION TO RESTR
 @router.get("/{restr_id}")
-async def read_todo(restr_id: int, user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    if user is None:
-        raise get_user_exception()
-    restr_model = db.query(models.Restaurants).filter(models.Restaurants.id == restr_id).filter(models.Restaurants.owner_id == user.get("id")).first()
+async def read_todo(restr_id: int, db: Session = Depends(get_db)):
+    #  user: dict = Depends(get_current_user)
+    # if user is None:
+    #     raise get_user_exception()
+    restr_model = db.query(models.Restaurants).filter(models.Restaurants.id == restr_id).first()
+    # .filter(models.Restaurants.owner_id == user.get("id"))
     if restr_model is not None:
         return restr_model
     raise http_exception()

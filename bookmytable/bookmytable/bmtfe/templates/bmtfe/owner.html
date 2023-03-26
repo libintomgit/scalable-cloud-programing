@@ -1,0 +1,41 @@
+{% extends 'bmtfe/base.html' %}
+{% block title%} {{user.first_name}} {% endblock title%}
+
+{% block body %}
+{% include 'bmtfe/navbar.html' %}
+{% load static %}
+
+<div class="container-fluid" style="background-color:" >
+    <div class="container my-3 text-justify text-center p-3 mb-2 bg-info text-white">
+        <h1>Welcome Back{{user.fullname}}</h1>
+        <p>Find the bookings below</p>
+    </div>
+    {%for booking in bookings %}
+    <div class="container-xxl border my-3">
+        <div class="row">
+            {% comment %} <div class="col">
+                <img src="{% static 'bmtfe/images/testimg.png' %}" class="card-img-top img-thumbnail rounded" style="" alt="...">
+            </div> {% endcomment %}
+            <div class="col-9 d-flex flex-column">
+                <h3 class="card-title my-2">Booking ID : {{booking.id}}</h3>
+                <h3 class="card-title my-2">Booking Date : {{booking.boooking_date}}</h3>
+                <h3 class="card-title my-2">Booking Time :{{booking.boooking_time}}</h3>
+                <h4 class="card-title my-2">Customer Name: {{booking.name}}</h4>
+                <h4 class="card-title my-2">Customer Phone Number: {{booking.phone_number}}</h4>
+                {% comment %} <p class="card-text" style="margin-top: 25px; padding-right: 175px;">{{restr.description|slice:"0:200"|capfirst}} ...</p> {% endcomment %}
+                <div class="align-self-end" >
+                    <a onclick="window.location.href='/comleted/{{booking.id}}'" class="btn btn-outline-warning btn-sm" style="margin-top: 30px;">Completed</a>
+                    {% comment %} href="/knowmore"  {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>    
+
+
+
+
+
+
+{% endblock body %}

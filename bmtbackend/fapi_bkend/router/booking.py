@@ -58,7 +58,10 @@ async def book_restr(booking: Booking, db: Session = Depends(get_db)):
     db.add(booking_model)
     db.commit()
 
-    response = {"name": booking.name, "email_id" : booking.email_id, "phone_number" : booking.phone_number }
+    restr_name = db.query(models.Restaurants).filter(models.Restaurants.id == booking.restr_id).first()
+    restr_name = restr_name.title
+
+    response = {"name": booking.name, "date" : booking.booking_date, "time" : booking.booking_time, "restr_name": restr_name}
     return successfull_response(201), response
 
 @router.get("/all/{restr_id}")

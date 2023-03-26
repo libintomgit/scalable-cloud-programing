@@ -1,0 +1,51 @@
+{% extends 'bmtfe/base.html' %}
+{% block title%} Page Template {% endblock title%}
+
+{% block body %}
+{% include 'bmtfe/navbar.html' %}
+{% load static %}
+<div class="container-fluid">
+    <div class="container my-3 text-justify text-center p-3 mb-2 bg-info text-white">
+        <h1 style="font-size: 50px">Book at {{restr.title| title}}</h1>
+    </div>
+    <div class="container border">
+        <form action= "/booking/{{restr.id}}" method='post'>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Please enter your name.">
+            </div>
+            <div class="mb-3">
+                <label for="location" class="emailform-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Please enter your location.">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Please enter your email id.">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Please enter your phone number.">
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Booking Date</label>
+                <input type="date" class="form-control" id="date" name="date" placeholder="Please select the preferred booking date.">
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Booking Time</label>
+                <input type="time" class="form-control" id="time" name="time" placeholder="Please choose the booking time">
+            </div>
+            <div class="container">
+                <div class="d-grid gap-2" >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary btn-lg">Book Now</button>
+                </div>  
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %} 
