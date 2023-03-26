@@ -141,3 +141,14 @@ def bookingComplete(request, booking_id):
     messages.success(request, f"{response['response']} for the booking id {booking_id} ")
 
     return redirect('index')
+
+def bookingDelete(request, booking_id):
+    url = f"http://localhost:8000/api/booking/{booking_id}"
+    response = requests.delete(url)
+    response = response.json()
+    response = response[1]
+    
+    messages.success(request, f"{response['response'].title()} for the booking id {booking_id} ")
+
+    return redirect('index')
+

@@ -12,5 +12,6 @@ urlpatterns = [
     # path('signout', views.handleSignOut, name='handlesignout'),
     path('booking/<int:restr_id>', views.restrBooking, name='resterbooking'),
     path('bookingcomplete/<int:booking_id>', views.bookingComplete, name='bookingcomplete'),
+    path('bookingdelete/<int:booking_id>', views.bookingDelete, name='bookingdelete'),
 ]
 

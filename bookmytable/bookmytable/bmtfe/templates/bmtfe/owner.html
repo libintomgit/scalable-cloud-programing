@@ -32,7 +32,8 @@
                 <h5 class="card-title my-2">Customer Phone Number: {{booking.phone_number}}</h5>
                 {% comment %} <p class="card-text" style="margin-top: 25px; padding-right: 175px;">{{restr.description|slice:"0:200"|capfirst}} ...</p> {% endcomment %}
                 <div class="align-self-end" >
-                    <a onclick="window.location.href='/bookingcomplete/{{booking.id}}'" class="btn btn-outline-warning btn-sm" style="margin-top: 30px;">Completed</a>
+                    <a onclick="window.location.href='/bookingcomplete/{{booking.id}}'" class="btn btn-outline-warning btn-sm" style="margin-top: 30px;">Complete</a>
+                    <a onclick="window.location.href='/bookingcomplete/{{booking.id}}'" class="btn btn-outline-warning btn-sm" style="margin-top: 30px;">Delete</a>
                     {% comment %} href="/knowmore"  {% endcomment %}
                 </div>
             </div>
