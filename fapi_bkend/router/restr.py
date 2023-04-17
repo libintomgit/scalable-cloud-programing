@@ -74,7 +74,7 @@ async def read_todo(restr_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/")
-async def create_restr(restr: Restr, user = "1", db: Session = Depends(get_db)):
+async def create_restr(restr: Restr, user = 1, db: Session = Depends(get_db)):
     # dict = Depends(get_current_user)
     if user is None:
         raise get_user_exception()
@@ -84,8 +84,8 @@ async def create_restr(restr: Restr, user = "1", db: Session = Depends(get_db)):
     restr_model.category = restr.category
     restr_model.sub_category = restr.sub_category
     restr_model.phone_number = restr.phone_number
-    restr_model.owner_id = int(user)
-    # restr_model.owner_id = user.get("id")
+    restr_model.owner_id = user
+    # restr_model.owner_id = user.get("id)
 
     db.add(restr_model)
     db.commit()
@@ -136,7 +136,7 @@ async def create_restr(restr: Restr, user = "1", db: Session = Depends(get_db)):
 
 ### Below are the reusable functions
 def http_exception():
-    return HTTPException(status_code=404, detail="Todo item not found")
+    return HTTPException(status_code=404, detail="Item not found")
     
 def successfull_response(status_code: int):
     return {"status": status_code, "transaction": "Successfull."}

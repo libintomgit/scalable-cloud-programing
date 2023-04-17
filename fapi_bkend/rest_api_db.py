@@ -14,8 +14,9 @@ from sqlalchemy.ext.declarative import declarative_base
 # Base = declarative_base()
 
 ## python3 -m pip install psycopg2-binary
-SQLALCHEMY_DAATABASE_URL = "postgresql://libintom:password123@localhost/bmt_bkend_db_1"
-# SQLALCHEMY_DAATABASE_URL = "postgresql://libintom:password123@ec2-100-25-221-164.compute-1.amazonaws.com/bmtdb1"
+# SQLALCHEMY_DAATABASE_URL = "postgresql://libintom:password123@localhost/bmt_bkend_db_1"
+SQLALCHEMY_DAATABASE_URL = "postgresql://libintom:password123@bmt-db-1.ce0njtqyahax.us-east-1.rds.amazonaws.com/bmtbkenddb1"
+
 
 engine = create_engine(SQLALCHEMY_DAATABASE_URL)
 

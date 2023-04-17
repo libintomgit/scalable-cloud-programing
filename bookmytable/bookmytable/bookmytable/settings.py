@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-wflom0i#7ic=%-^kw#uiffh^5czt(@n7!8=j5f4z!np50d&5e3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0','172.31.15.98','bmt-frontend-env-1.eba-p7rwqh5p.us-east-1.elasticbeanstalk.com', '82487eb7725148f0b5f3cb240b5cdbf2.vfs.cloud9.us-east-1.amazonaws.com', '3.239.162.71']
 
 # Application definition
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'bookmytable.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 ## Manual Comment ## Below configuration is used to connect with the aws database

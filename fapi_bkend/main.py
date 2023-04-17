@@ -4,6 +4,7 @@ from router import auth, restr, users, address, booking
 import models
 from company import companyapis, dependecies
 from starlette.staticfiles import StaticFiles
+from http import HTTPStatus
 
 app = FastAPI()
 
@@ -11,7 +12,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-from http import HTTPStatus
 @app.get("/")
 async def home():
     return {"status": HTTPStatus.OK, "transaction": "Successfull."}
@@ -24,4 +24,3 @@ app.include_router(booking.router, prefix="/api/booking", tags=["booking"], resp
 
 # COMMENT HERE
 # app.include_router(companyapis.router, prefix="/api/companyapis", tags=["companyapis"], dependencies=[Depends(dependecies.get_token_header)], responses={418: {"description": "Internal user only"}})
-
